@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 class Unit {
     constructor(element) {
         this.element = element
@@ -7,7 +9,7 @@ class Unit {
 class LusterTextUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
-        return `<span data-lusterid=${id}>${this.element}</span>`
+        return `<span data-lusterid="${id}">${this.element}</span>`
     }
 }
 
@@ -16,11 +18,14 @@ class LusterNativeUnit extends Unit {
         console.log(id, 'id')
         this._rootId = id
         let {type, props} = this.element
-        let tagStart = `<${type} `
+        let tagStart = `<${type} data-lusterid="${id}"`
         let tagEnd = `</${type}>`
         let contentStr = ''
         for (let key in props) {
-            if (key === 'childrens') {
+            if (/on[A-Z]/.test(key)) {
+                let eventType = key.slice(2).toLocaleLowerCase()
+                $(document).on(eventType, `[data-lusterid="${id}"]`, props[key])
+            } else if (key === 'childrens') {
                 contentStr = props[key].map((child, idx) => {
                     let unitInstance = createLusterUnit(child)
                     return unitInstance.getMarkUp(`${id}.${idx}`)
