@@ -39,11 +39,24 @@ class LusterNativeUnit extends Unit {
     }
 }
 
+class LusterCompositUnit extends Unit {
+    getMarkUp(id) {
+        this._rootId = id
+        let {type:Component, props} = this.element
+        let component = new Component(props)
+        let renderInstance = component.render()
+        let compositInstance = createLusterUnit(renderInstance)
+        return compositInstance.getMarkUp(id)
+    }
+}
+
 function createLusterUnit(element) {
     if (typeof element === 'string' || typeof element === 'number') {
         return new LusterTextUnit(element)
     } else if (typeof element === 'object' && typeof element.type === 'string') {
         return new LusterNativeUnit(element)
+    } else if (typeof element === 'object' && typeof element.type == 'function') {
+        return new LusterCompositUnit(element)
     }
 }
 

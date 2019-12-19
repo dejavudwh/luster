@@ -1,11 +1,13 @@
 import $ from 'jquery'
 import createLusterUnit from './unit'
 import createElement from './element'
+import Componenet from './component'
 
 let Luster = {
     render,
     nextRootIndex: 0,
-    createElement
+    createElement,
+    Componenet
 }
 
 function render(element, container) {
