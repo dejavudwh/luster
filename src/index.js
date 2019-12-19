@@ -1,5 +1,5 @@
-import say from './test'
+import Luster from './luster/luster'
 
-let name = 'Bread and Dream';
-let greeting = `hello ${name}`;
-say()
+const html = '<button>hello luster</button>'
+
+Luster.render(html, document.getElementById('root'))
