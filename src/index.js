@@ -1,5 +1,8 @@
 import Luster from './luster/luster'
 
-const html = '<button>hello luster</button>'
+// const element = '<button>hello luster</button>'
 
-Luster.render(html, document.getElementById('root'))
+const element = Luster.createElement('div', {name: 'luster'}, 
+                                    'hello', 
+                                    Luster.createElement('button', {}, '123'))                                 
+Luster.render(element, document.getElementById('root'))
