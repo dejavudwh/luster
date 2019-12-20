@@ -5,9 +5,14 @@ class Element {
     }
 }
 
-function createElement(type, props, ...childrens) {
+// function createElement(type, props, ...childrens) {
+//     props = props || {}
+//     props.childrens = childrens
+//     return new Element(type, props)
+// }
+
+function createElement(type, props) {
     props = props || {}
-    props.childrens = childrens
     return new Element(type, props)
 }
 

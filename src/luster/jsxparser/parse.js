@@ -46,6 +46,7 @@ class JsxParser {
             throw 'parse error! Mismatched start and end tags'
         }
 
+        // return JSON.stringify(this.jsx, null, 2)
         return this.jsx
     }
 
