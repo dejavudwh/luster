@@ -85,7 +85,7 @@ class JsxParser {
     }
 
     parseText(tag) {
-        this.currentJsx['props']['text'] = tag
+        this.currentJsx['props']['childrens'].push(tag)
         this.parse()
     }
 
