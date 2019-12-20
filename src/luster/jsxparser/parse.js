@@ -108,4 +108,9 @@ class JsxParser {
     }
 }
 
-export default JsxParser
+function jsx(string) {
+    const jsxParser = new JsxParser(string)
+    return jsxParser.parse(string)
+}
+
+export default jsx

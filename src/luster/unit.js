@@ -42,8 +42,12 @@ class LusterNativeUnit extends Unit {
 class LusterCompositUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
-        let {type:Component, props} = this.element
-        let component = new Component(props)
+        // let {type:Component, props} = this.element
+        // let component = new Component(props)
+        // let renderInstance = component.render()
+        // let compositInstance = createLusterUnit(renderInstance)
+        // return compositInstance.getMarkUp(id)
+        let component = new this.element()
         let renderInstance = component.render()
         let compositInstance = createLusterUnit(renderInstance)
         return compositInstance.getMarkUp(id)
@@ -55,7 +59,7 @@ function createLusterUnit(element) {
         return new LusterTextUnit(element)
     } else if (typeof element === 'object' && typeof element.type === 'string') {
         return new LusterNativeUnit(element)
-    } else if (typeof element === 'object' && typeof element.type == 'function') {
+    } else if (typeof element === 'function') {
         return new LusterCompositUnit(element)
     }
 }
