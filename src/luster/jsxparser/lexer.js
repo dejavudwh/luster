@@ -1,3 +1,5 @@
+import log from '../utils'
+
 let token = {
     startTag: 'startTag',
     endTag: 'endTag',

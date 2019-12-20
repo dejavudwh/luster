@@ -6,7 +6,7 @@ import log from './luster/utils'
 let str = `
     <div name="st">
         <span tga="asd">
-            <p>sdf</p>
+            <button>sdf</button>
         </span>
     </div>
 `
