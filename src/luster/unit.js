@@ -27,7 +27,6 @@ class LusterNativeUnit extends Unit {
                 $(document).on(eventType, `[data-lusterid="${id}"]`, props[key])
             } else if (key === 'childrens') {
                 contentStr = props[key].map((child, idx) => {
-                    console.log('child ', child)
                     if (lusterComponent.hasOwnProperty(child.type)) {
                         child = lusterComponent[child.type]
                     }
@@ -47,6 +46,7 @@ class LusterCompositUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
         let component = new this.element()
+        component.componentWillCount && component.componentWillCount()
         let renderInstance = component.render()
         let compositInstance = createLusterUnit(renderInstance)
         return compositInstance.getMarkUp(id)

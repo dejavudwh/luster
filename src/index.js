@@ -4,6 +4,10 @@ import jsx from './luster/jsxparser/parse'
 import { registered } from './luster/components/LusterRegister'
 
 class Pape extends Componenet {
+    componentWillCount() {
+        console.log('pape 将要挂载')
+    }
+
     render() {
         return jsx(`
             <div name="aaa">
