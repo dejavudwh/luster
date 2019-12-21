@@ -8,23 +8,20 @@ const ATTR = 'ATTR'
 
 function diff(oldTree, newTree) {
     console.log(oldTree, newTree)
-    walker(oldTree, newTree)
+    walker(oldTree, newTree, 0)
 
     return patchs
 }
 
-function walker(oldChild, newChild) {
-    index++
+function walker(oldChild, newChild, index) {
     console.log('no handle ', index, oldChild, newChild)
     let currentPatch = {}
     if (!newChild) {
         console.log('remove -------')
         currentPatch[REMOVE] = oldChild
-        patchs[index] = currentPatch 
     } else if (isString(oldChild) && isString(newChild)) {
         if (oldChild !== newChild) {
             currentPatch[TEXT] = newChild
-            patchs[index] = currentPatch 
         }
     } else if (oldChild.type === newChild.type) {
         let attr = diffAttr(oldChild, newChild)
@@ -33,16 +30,15 @@ function walker(oldChild, newChild) {
             currentPatch[ATTR] = attr
             patchs[index] = currentPatch 
         }
-        diffChildrens(oldChild.props.childrens, newChild.props.childrens)
+        diffChildrens(oldChild.props.childrens, newChild.props.childrens, index)
     } else {
         currentPatch[REPLACE] = newChild
-        patchs[index] = currentPatch 
     }
 
-    // if (Object.keys(currentPatch).length > 0) {
-    //     console.log(currentPatch, index)
-    //     patchs[index] = currentPatch 
-    // }
+    if (Object.keys(currentPatch).length > 0) {
+        console.log(currentPatch, index)
+        patchs[index] = currentPatch 
+    }
 }
 
 function diffAttr(oldNode, newNode) {
@@ -64,10 +60,10 @@ function diffAttr(oldNode, newNode) {
     return attr
 }
 
-function diffChildrens(oldChildrens, newChildrens) {
+function diffChildrens(oldChildrens, newChildrens, index) {
     // console.log(oldChildrens)
     oldChildrens.forEach((child, idx) => {
-        walker(child, newChildrens[idx])
+        walker(child, newChildrens[idx], ++index)
     }) 
 }
 
