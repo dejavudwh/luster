@@ -1,4 +1,4 @@
-let index = 0
+let index = -1
 let patchs = []
 
 const TEXT = 'TEXT'
@@ -14,28 +14,35 @@ function diff(oldTree, newTree) {
 }
 
 function walker(oldChild, newChild) {
-    console.log('no handle ', oldChild, newChild)
+    index++
+    console.log('no handle ', index, oldChild, newChild)
     let currentPatch = {}
     if (!newChild) {
+        console.log('remove -------')
         currentPatch[REMOVE] = oldChild
+        patchs[index] = currentPatch 
     } else if (isString(oldChild) && isString(newChild)) {
         if (oldChild !== newChild) {
             currentPatch[TEXT] = newChild
+            patchs[index] = currentPatch 
         }
     } else if (oldChild.type === newChild.type) {
         let attr = diffAttr(oldChild, newChild)
-        // console.log('=== ', oldChild, newChild)
         if (Object.keys(attr).length > 0) {
+            console.log('=== ')
             currentPatch[ATTR] = attr
+            patchs[index] = currentPatch 
         }
         diffChildrens(oldChild.props.childrens, newChild.props.childrens)
     } else {
-        currentPatch[REMOVE] = oldChild
-    }
-
-    if (Object.keys(currentPatch).length > 0) {
+        currentPatch[REPLACE] = newChild
         patchs[index] = currentPatch 
     }
+
+    // if (Object.keys(currentPatch).length > 0) {
+    //     console.log(currentPatch, index)
+    //     patchs[index] = currentPatch 
+    // }
 }
 
 function diffAttr(oldNode, newNode) {
@@ -43,7 +50,6 @@ function diffAttr(oldNode, newNode) {
     let np = newNode.props
     let opk = Object.keys(op).sort()
     let npk = Object.keys(np).sort()
-    console.log('opl npl ', opk, npk)
     let attr = {}
     npk.forEach((prop, idx) => {
         let v = np[prop]
@@ -52,8 +58,8 @@ function diffAttr(oldNode, newNode) {
                 [prop]: v
             })
         }
-        console.log('attr ', prop, np[prop], v)
     })
+    console.log('attr ', index)
     
     return attr
 }
@@ -61,22 +67,12 @@ function diffAttr(oldNode, newNode) {
 function diffChildrens(oldChildrens, newChildrens) {
     // console.log(oldChildrens)
     oldChildrens.forEach((child, idx) => {
-        index++
         walker(child, newChildrens[idx])
     }) 
 }
 
 function isString(node) {
     return Object.prototype.toString.call(node) === '[object String]'
-}
-
-function sortObjKey(unordered) {
-    const ordered = {};
-    Object.keys(unordered).sort().forEach(function(key) {
-        ordered[key] = unordered[key];
-    });
-
-    return ordered
 }
 
 export default diff
