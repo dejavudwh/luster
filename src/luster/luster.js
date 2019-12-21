@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import createLusterUnit from './unit'
 import createElement from './element'
-import Componenet from './component'
+import Componenet from './components/component'
 
 let Luster = {
     render,

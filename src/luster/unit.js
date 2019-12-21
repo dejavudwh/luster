@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import { lusterComponent } from './components/LusterRegister'
 
 class Unit {
     constructor(element) {
@@ -15,7 +16,6 @@ class LusterTextUnit extends Unit {
 
 class LusterNativeUnit extends Unit {
     getMarkUp(id) {
-        console.log(id, 'id')
         this._rootId = id
         let {type, props} = this.element
         let tagStart = `<${type} data-lusterid="${id}"`
@@ -27,6 +27,10 @@ class LusterNativeUnit extends Unit {
                 $(document).on(eventType, `[data-lusterid="${id}"]`, props[key])
             } else if (key === 'childrens') {
                 contentStr = props[key].map((child, idx) => {
+                    console.log('child ', child)
+                    if (lusterComponent.hasOwnProperty(child.type)) {
+                        child = lusterComponent[child.type]
+                    }
                     let unitInstance = createLusterUnit(child)
                     return unitInstance.getMarkUp(`${id}.${idx}`)
                 }).join('')
@@ -42,11 +46,6 @@ class LusterNativeUnit extends Unit {
 class LusterCompositUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
-        // let {type:Component, props} = this.element
-        // let component = new Component(props)
-        // let renderInstance = component.render()
-        // let compositInstance = createLusterUnit(renderInstance)
-        // return compositInstance.getMarkUp(id)
         let component = new this.element()
         let renderInstance = component.render()
         let compositInstance = createLusterUnit(renderInstance)
