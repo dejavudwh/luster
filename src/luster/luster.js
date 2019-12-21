@@ -28,10 +28,10 @@ function render(element, container) {
     console.log(Luster.virtualDom)
     // debug
     let m = jsx(`
-                <div name="st">
-                    <span tga="asd">
+                <div name="st" data-lusterid="1" test="zxc">
+                    <span tga="asd" data-lusterid="1">
                         zxc
-                        <button onClick="{handleClick}">asd</button>
+                        <button data-lusterid="1" onClick="{handleClick}">asd</button>
                     </span>
                 </div>
             `)

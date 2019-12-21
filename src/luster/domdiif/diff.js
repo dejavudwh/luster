@@ -43,14 +43,16 @@ function diffAttr(oldNode, newNode) {
     let np = newNode.props
     let opk = Object.keys(op).sort()
     let npk = Object.keys(np).sort()
+    console.log('opl npl ', opk, npk)
     let attr = {}
-    opk.forEach((prop, idx) => {
-        let v = np[npk[idx]]
-        if (prop !== 'childrens' && op[prop] !== v) {
+    npk.forEach((prop, idx) => {
+        let v = np[prop]
+        if (prop !== 'childrens' && v !== op[opk[idx]]) {
             Object.assign(attr, {
                 [prop]: v
             })
         }
+        console.log('attr ', prop, np[prop], v)
     })
     
     return attr
