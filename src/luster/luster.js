@@ -33,6 +33,8 @@ function render(element, container) {
                         zxc
                         <button data-lusterid="1" onClick="{handleClick}">asd</button>
                     </span>
+                    <div class="asd">
+                    </div>
                 </div>
             `)
     let patchs = diff(Luster.virtualDom, m)

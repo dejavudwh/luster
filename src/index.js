@@ -36,6 +36,8 @@ class Pape extends Componenet {
                      zxc
                     <button onClick="{handleClick}">${this.state.text}</button>
                 </span>
+                <div id="asd">
+                </div>
             </div>
         `)
     }
@@ -56,6 +58,8 @@ class Fuck extends Componenet {
                     <span>qqq</span>
                     <button onClick="{handleClick}">asd</button>
                 </span>
+                <div>
+                </div>
             </div>
         `)
     }

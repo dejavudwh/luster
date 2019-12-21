@@ -1,4 +1,4 @@
-let index = -1
+let index = 0
 let patchs = []
 
 const TEXT = 'TEXT'
@@ -8,12 +8,12 @@ const ATTR = 'ATTR'
 
 function diff(oldTree, newTree) {
     console.log(oldTree, newTree)
-    walker(oldTree, newTree, 0)
+    walker(oldTree, newTree)
 
     return patchs
 }
 
-function walker(oldChild, newChild, index) {
+function walker(oldChild, newChild) {
     console.log('no handle ', index, oldChild, newChild)
     let currentPatch = {}
     if (!newChild) {
@@ -35,7 +35,7 @@ function walker(oldChild, newChild, index) {
         currentPatch[REPLACE] = newChild
     }
 
-    if (Object.keys(currentPatch).length > 0) {
+    if (Object.keys(currentPatch).length > 0 && !patchs[index]) {
         console.log(currentPatch, index)
         patchs[index] = currentPatch 
     }
@@ -60,10 +60,11 @@ function diffAttr(oldNode, newNode) {
     return attr
 }
 
-function diffChildrens(oldChildrens, newChildrens, index) {
+function diffChildrens(oldChildrens, newChildrens) {
     // console.log(oldChildrens)
     oldChildrens.forEach((child, idx) => {
-        walker(child, newChildrens[idx], ++index)
+        index++
+        walker(child, newChildrens[idx])
     }) 
 }
 
