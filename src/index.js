@@ -20,17 +20,20 @@ class Pape extends Componenet {
     }
 
     handleClick() {
-        console.log('click   ', this.state.text)
-        this.setState({
-            text: !this.state.text
-        })
+        // console.log('click   ', this.state.text)
+        for (let i = 0;i < 10; i++) {
+            console.log(i)
+            this.setState({
+                text: !this.state.text
+            })
+        }
     }
 
     render() {
         return jsx(`
             <div name="aaa">
                 <span tga="bbb">
-                    <button onClick="{handleClick}">ccc</button>
+                    <button onClick="{handleClick}">${this.state.text}</button>
                 </span>
             </div>
         `)

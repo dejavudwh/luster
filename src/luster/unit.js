@@ -32,7 +32,6 @@ class LusterNativeUnit extends Unit {
                 let val = props[key].slice(1, props[key].length - 1)
                 let obj = comps[comps.length - 1]
                 let element = obj[Object.keys(obj)[0]]
-                console.log('event num ----------------------------', )
                 $(document).on(eventType, `[data-lusterid="${id}"]`, () => { element[val]() })
             } else if (key === 'childrens') {
                 contentStr = props[key].map((child, idx) => {
@@ -67,8 +66,6 @@ class LusterCompositUnit extends Unit {
                 [name]: component
             })
         }
-        console.log('exist c', comps, component)
-        // console.log('will', component)
         component.componentWillCount && component.componentWillCount()
         let renderInstance = component.render()
         let compositInstance = createLusterUnit(renderInstance)

@@ -8,16 +8,13 @@ class Component {
     }
 
     setState(newState) {
-        // enqueueSetState(newState, this)
-        Object.assign(this.state, newState)
-        console.log('cps ',Luster.componentUnits)
-        let obj = Luster.componentUnits[0]
-        let app = obj[Object.keys(obj)[0]]
-        // Luster.componentUnits = []
-        console.log('app ', app)
-        Luster.nextRootIndex = 0
-        Luster.renderTimes++
-        Luster.render(app.render(), document.getElementById('root'))
+        // Object.assign(this.state, newState)
+        // let obj = Luster.componentUnits[0]
+        // let app = obj[Object.keys(obj)[0]]
+        // Luster.nextRootIndex = 0
+        // Luster.renderTimes++
+        // Luster.render(app.render(), document.getElementById('root'))
+        enqueueSetState(newState, this)
     }
 
     render() {}
