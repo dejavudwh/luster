@@ -33,6 +33,7 @@ class Pape extends Componenet {
         return jsx(`
             <div name="aaa">
                 <span tga="bbb">
+                     zxc
                     <button onClick="{handleClick}">${this.state.text}</button>
                 </span>
             </div>
@@ -52,8 +53,8 @@ class Fuck extends Componenet {
             <div name="st">
                 <span tga="asd">
                     asdas
+                    <span>qqq</span>
                     <button onClick="{handleClick}">asd</button>
-                    <Pape></Pape>
                 </span>
             </div>
         `)
@@ -61,8 +62,6 @@ class Fuck extends Componenet {
 }
 
 registered(Fuck)
-
-console.log('fuck type ', Fuck.prototype.constructor.name)
 
 // const element = Luster.createElement(Fuck, {name: 'luster', onClick: function(){ alert('1') }}, 
 //                                     'hello luster', 

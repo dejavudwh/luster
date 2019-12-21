@@ -11,7 +11,8 @@ class Unit {
 class LusterTextUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
-        return `<span data-lusterid="${id}">${this.element}</span>`
+        // return `<span data-lusterid="${id}">${this.element}</span>`
+        return `${this.element}`
     }
 }
 
@@ -19,7 +20,7 @@ class LusterNativeUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
         let {type, props} = this.element
-        let tagStart = `<${type} data-lusterid="${id}"`
+        let tagStart = `<${type} data-lusterid="${id}" `
         let tagEnd = `</${type}>`
         let contentStr = ''
         let comps = Luster.componentUnits
@@ -42,7 +43,7 @@ class LusterNativeUnit extends Unit {
                     return unitInstance.getMarkUp(`${id}.${idx}`)
                 }).join('')
             } else {
-                tagStart += `${key}=${props[key]}`
+                tagStart += `${key}="${props[key]}"`
             }
         }
 
