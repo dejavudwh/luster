@@ -4,15 +4,32 @@ import jsx from './luster/jsxparser/parse'
 import { registered } from './luster/components/LusterRegister'
 
 class Pape extends Componenet {
+    constructor(props) {
+        super(props)
+        this.state = {
+            text: 'asdasd'
+        }
+    }
+
     componentWillCount() {
         console.log('pape 将要挂载')
+    }
+
+    componentDidMount() {
+        this.setState({
+            text: 'zxczxc'
+        })
+    }
+
+    handleClick() {
+        console.log('click   ', this)
     }
 
     render() {
         return jsx(`
             <div name="aaa">
                 <span tga="bbb">
-                    <button>ccc</button>
+                    <button onClick="{handleClick}">ccc</button>
                 </span>
             </div>
         `)
@@ -22,11 +39,16 @@ class Pape extends Componenet {
 registered(Pape)
 
 class Fuck extends Componenet {
+    handleClick() {
+        console.log('click ', this)
+    }
+
     render() {
         return jsx(`
             <div name="st">
                 <span tga="asd">
                     asdas
+                    <button onClick="{handleClick}">asd</button>
                     <Pape></Pape>
                 </span>
             </div>
@@ -45,5 +67,13 @@ console.log('fuck type ', Fuck.prototype.constructor.name)
 // const element = Luster.createElement(jsx.type, jsx.props)
 
 // log(element)
+
+// const el = `
+//             <div name="aaa">
+//                 <span tga="bbb">
+//                     <button onClick="${function asd(){console.log('asd')}}">ccc</button>
+//                 </span>
+//             </div>
+// `
 
 Luster.render(Fuck, document.getElementById('root'))

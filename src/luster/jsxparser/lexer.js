@@ -11,6 +11,7 @@ class Lexer {
     constructor(string) {
         this.token = token
         this.string = string
+        console.log(string)
         this.pos = 0
     }
 
@@ -72,9 +73,8 @@ class Lexer {
 
     handleStartTag() {
         let idx = this.string.indexOf('>')
-        if (idx == -1) {
-            log('parse err! miss match '>'')
-            throw 'parse err! miss match '>''
+        if (idx === -1) {
+            throw new Error('parse err! miss match '>'')
         }
         let str = this.string.slice(this.pos, idx)
         let s = ''
@@ -97,9 +97,8 @@ class Lexer {
         let idx = this.string.indexOf('>')
         let type = this.string.slice(this.pos, idx)
         this.pos += type.length
-        if (this.advance() != '>') {
-            log('parse err! miss match '>'')
-            throw 'parse err! miss match '>''
+        if (this.advance() !== '>') {
+            throw new Error('parse err! miss match '>'')
         }
         return [token.endTag, type, []]
     }
@@ -107,15 +106,14 @@ class Lexer {
     handlePropTag() {
         let idx = this.string.indexOf('>')
         if (idx == -1) {
-            log('parse err! miss match '>'')
-            throw 'parse err! miss match '>''
+            throw new Error( 'parse err! miss match '>'')
         }
         let string = this.string.slice(this.pos, idx)
         let pm = []
-        if (string != ' ')  {
+        if (string !== ' ')  {
             let props = string.split(' ')
             pm = props.filter((props) => {
-                return props != ''
+                return props !== ''
             }).map((prop) => {
                 let kv = prop.split('=')
                 let o = {}
@@ -130,7 +128,7 @@ class Lexer {
 
     handleTextTag(text) {
         let t = text.trim()
-        if (this.lookAhead() == '<') {
+        if (this.lookAhead() === '<') {
             return [this.token['text'], t, []]
         } else {
             return ''
@@ -139,14 +137,13 @@ class Lexer {
 
     trimQuotes(string) {
         let last = string.length - 1
-        let dq = string[0] == '"' && string[last] == '"'
-        let iq = string[0] == '\'' && string[last] == '\''
+        let dq = string[0] === '"' && string[last] === '"'
+        let iq = string[0] === '\'' && string[last] === '\''
         if (dq || iq) {
             return string.slice(1, last)
         }
 
-        log(`parse error! ${string} quotes miss matchs`)
-        throw `parse error! ${string} quotes miss matchs`
+        throw new Error(`parse error! ${string} quotes miss matchs`)
     }
 }
 

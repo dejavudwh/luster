@@ -42,11 +42,9 @@ class JsxParser {
         }
 
         if (this.tags.length > 0) {
-            log('parse error! Mismatched start and end tags')
-            throw 'parse error! Mismatched start and end tags'
+            throw new Error('parse error! Mismatched start and end tags')
         }
 
-        // return JSON.stringify(this.jsx, null, 2)
         return this.jsx
     }
 
@@ -95,7 +93,7 @@ class JsxParser {
 
     parseErr() {
         log(`parse err! syntax err `)
-        throw `parse err! syntax err `
+        throw new Error(`parse err! syntax err `)
     }
 
     mergeObj(objs) {
