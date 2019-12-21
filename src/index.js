@@ -7,22 +7,23 @@ class Pape extends Componenet {
     constructor(props) {
         super(props)
         this.state = {
-            text: 'asdasd'
+            text: false
         }
     }
 
     componentWillCount() {
-        console.log('pape 将要挂载')
+
     }
 
     componentDidMount() {
-        this.setState({
-            text: 'zxczxc'
-        })
+        
     }
 
     handleClick() {
-        console.log('click   ', this)
+        console.log('click   ', this.state.text)
+        this.setState({
+            text: !this.state.text
+        })
     }
 
     render() {

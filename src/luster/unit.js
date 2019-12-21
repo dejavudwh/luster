@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import { lusterComponent } from './components/LusterRegister'
-
-let componentUnits = []
+import Luster from './luster'
 
 class Unit {
     constructor(element) {
@@ -23,13 +22,17 @@ class LusterNativeUnit extends Unit {
         let tagStart = `<${type} data-lusterid="${id}"`
         let tagEnd = `</${type}>`
         let contentStr = ''
+        let comps = Luster.componentUnits
         for (let key in props) {
               if (/on[A-Z]/.test(key)) {
+                if (Luster.renderTimes !== 0) {
+                    break
+                }
                 let eventType = key.slice(2).toLocaleLowerCase()
                 let val = props[key].slice(1, props[key].length - 1)
-                let element = componentUnits[componentUnits.length - 1]
-                let func = element[val]
-                console.log('event ', element, val, func)
+                let obj = comps[comps.length - 1]
+                let element = obj[Object.keys(obj)[0]]
+                console.log('event num ----------------------------', )
                 $(document).on(eventType, `[data-lusterid="${id}"]`, () => { element[val]() })
             } else if (key === 'childrens') {
                 contentStr = props[key].map((child, idx) => {
@@ -51,13 +54,36 @@ class LusterNativeUnit extends Unit {
 class LusterCompositUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
-        let component = new this.element()
-        componentUnits.push(component)
+        let comps = Luster.componentUnits
+        let component
+        let constructor = this.element.prototype.constructor
+        let name = constructor.name
+        let idx = existComponent(comps, name)
+        if (idx !== -1) {
+            component = comps[idx][name]
+        } else {
+            component = new this.element()
+            comps.push({
+                [name]: component
+            })
+        }
+        console.log('exist c', comps, component)
+        // console.log('will', component)
         component.componentWillCount && component.componentWillCount()
         let renderInstance = component.render()
         let compositInstance = createLusterUnit(renderInstance)
         return compositInstance.getMarkUp(id)
     }
+}
+
+function existComponent(components, name) {
+    for (let i in components) {
+        if (components[i].hasOwnProperty(name)) {
+            return i
+        }
+    }
+
+    return -1
 }
 
 function createLusterUnit(element) {

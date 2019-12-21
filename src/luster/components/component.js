@@ -10,7 +10,14 @@ class Component {
     setState(newState) {
         // enqueueSetState(newState, this)
         Object.assign(this.state, newState)
-        Luster.render(this.constructor, document.getElementById('root'))
+        console.log('cps ',Luster.componentUnits)
+        let obj = Luster.componentUnits[0]
+        let app = obj[Object.keys(obj)[0]]
+        // Luster.componentUnits = []
+        console.log('app ', app)
+        Luster.nextRootIndex = 0
+        Luster.renderTimes++
+        Luster.render(app.render(), document.getElementById('root'))
     }
 
     render() {}

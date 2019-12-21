@@ -1,5 +1,3 @@
-import log from '../utils'
-
 let token = {
     startTag: 'startTag',
     endTag: 'endTag',
@@ -11,7 +9,6 @@ class Lexer {
     constructor(string) {
         this.token = token
         this.string = string
-        console.log(string)
         this.pos = 0
     }
 

@@ -3,11 +3,15 @@ import createLusterUnit from './unit'
 import createElement from './element'
 import Componenet from './components/component'
 
+let componentUnits = []
+
 let Luster = {
     render,
     nextRootIndex: 0,
     createElement,
-    Componenet
+    Componenet,
+    componentUnits,
+    renderTimes: 0,
 }
 
 function render(element, container) {
