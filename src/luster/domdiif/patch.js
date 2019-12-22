@@ -4,24 +4,27 @@ function putPatch(dom, patchs) {
 }
 
 function walker(dom, patchs) {
+    console.log('index ', index, dom)
     let patch = patchs[index]
     index++
     if (patch) {
-        console.log('patch ', patch, dom.innerText)
+        console.log('patch ', patch, dom)
         let parent = dom.parentNode
         switch (patch.type) {
             case 'TEXT':
-                dom.innerText = patch.value
+                console.log('text ', dom)
+                dom.nodeValue = patch.value
                 break
             case 'REMOVE':
                 parent.removeChild(dom)
-                break
+                return
             case 'REPLACE':
-                let node = jsx2dom(patch.value)
-                console.log('replace ', str2dom(node), dom instanceof Node)
+                let node = jsx2str(patch.value)
                 parent.replaceChild(str2dom(node), dom)
-                break
+                console.log('replace ', dom)
+                return
             case 'ATTR':
+                setAttr(dom, patch.value)
                 break
             default:
                 break
@@ -29,7 +32,6 @@ function walker(dom, patchs) {
     }
     
     walkChildrens(dom.childNodes, patchs)
-
 }
 
 function walkChildrens(childNodes, patchs) {
@@ -39,7 +41,7 @@ function walkChildrens(childNodes, patchs) {
     })
 }
 
-function jsx2dom(jsx) {
+function jsx2str(jsx) {
     // 这里应该要复用之前的代码，但是还没有想到很好的办法
     let {type, props} = jsx
     let tagStart = `<${type} `
@@ -51,7 +53,7 @@ function jsx2dom(jsx) {
                 if (typeof child === 'string') {
                     return child
                 } else {
-                    return jsx2dom(child)
+                    return jsx2str(child)
                 }
             })
         } else {
@@ -67,6 +69,13 @@ function str2dom(str) {
 　　 dom.innerHTML = str;
     console.log('str2dom ', dom)
 　　 return dom.firstChild;
+}
+
+function setAttr(dom, attrs) {
+    console.log('set attr ', dom)
+    for (let key in attrs) {
+        dom.setAttribute(key, attrs[key])
+    }
 }
 
 export default putPatch

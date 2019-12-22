@@ -34,7 +34,9 @@ function render(element, container) {
                         <button data-lusterid="1" onClick="{handleClick}"><span>vbsfsgdf</span></button>
                     </span>
                     <div class="asd">
+                        <span>lll</span>
                     </div>
+                    <span>nv</span>
                 </div>
             `)
     let patchs = diff(Luster.virtualDom, m)
@@ -42,7 +44,7 @@ function render(element, container) {
 
     $(container).html(markUp)
     let dom = document.getElementById('root')
-    putPatch(dom, patchs)
+    putPatch(dom.firstChild, patchs)
 }
 
 export default Luster
