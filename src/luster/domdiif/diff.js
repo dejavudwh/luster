@@ -17,7 +17,6 @@ function walker(oldChild, newChild) {
     console.log('no handle ', index, oldChild, newChild)
     let currentPatch = {}
     if (!newChild) {
-        console.log('remove -------')
         currentPatch = {
             type: REMOVE,
             value: oldChild
@@ -32,7 +31,6 @@ function walker(oldChild, newChild) {
     } else if (oldChild.type === newChild.type) {
         let attr = diffAttr(oldChild, newChild)
         if (Object.keys(attr).length > 0) {
-            console.log('=== ')
             currentPatch = {
                 type: ATTR,
                 value: attr
@@ -73,7 +71,6 @@ function diffAttr(oldNode, newNode) {
 }
 
 function diffChildrens(oldChildrens, newChildrens) {
-    // console.log(oldChildrens)
     oldChildrens.forEach((child, idx) => {
         index++
         walker(child, newChildrens[idx])

@@ -31,8 +31,7 @@ function render(element, container) {
     let m = jsx(`
                 <div name="st" data-lusterid="1" test="zxc">
                     <span tga="asd" data-lusterid="1">
-                        <span>zxc</span>
-                        <button data-lusterid="1" onClick="{handleClick}">asd</button>
+                        <button data-lusterid="1" onClick="{handleClick}"><span>vbsfsgdf</span></button>
                     </span>
                     <div class="asd">
                     </div>

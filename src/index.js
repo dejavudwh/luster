@@ -54,7 +54,6 @@ class Fuck extends Componenet {
         return jsx(`
             <div name="st">
                 <span tga="asd">
-                    asdas
                     <span>qqq</span>
                     <button onClick="{handleClick}">asd</button>
                 </span>
