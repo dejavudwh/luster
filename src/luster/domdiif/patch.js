@@ -1,18 +1,16 @@
 let index = 0
 function putPatch(dom, patchs) {
     walker(dom, patchs)
+    index = 0
 }
 
 function walker(dom, patchs) {
-    console.log('index ', index, dom)
     let patch = patchs[index]
     index++
     if (patch) {
-        console.log('patch ', patch, dom)
         let parent = dom.parentNode
         switch (patch.type) {
             case 'TEXT':
-                console.log('text ', dom)
                 dom.nodeValue = patch.value
                 break
             case 'REMOVE':
@@ -21,7 +19,6 @@ function walker(dom, patchs) {
             case 'REPLACE':
                 let node = jsx2str(patch.value)
                 parent.replaceChild(str2dom(node), dom)
-                console.log('replace ', dom)
                 return
             case 'ATTR':
                 setAttr(dom, patch.value)
@@ -35,7 +32,6 @@ function walker(dom, patchs) {
 }
 
 function walkChildrens(childNodes, patchs) {
-    console.log('childNodes ', childNodes)
     childNodes.forEach((child) => {
         walker(child, patchs)
     })
@@ -67,12 +63,10 @@ function jsx2str(jsx) {
 function str2dom(str) {
 　　 let dom = document.createElement("div");
 　　 dom.innerHTML = str;
-    console.log('str2dom ', dom)
 　　 return dom.firstChild;
 }
 
 function setAttr(dom, attrs) {
-    console.log('set attr ', dom)
     for (let key in attrs) {
         dom.setAttribute(key, attrs[key])
     }

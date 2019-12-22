@@ -7,14 +7,14 @@ const REMOVE = 'REMOVE'
 const ATTR = 'ATTR'
 
 function diff(oldTree, newTree) {
-    console.log(oldTree, newTree)
     walker(oldTree, newTree)
-
-    return patchs
+    index = 0
+    let p = patchs
+    patchs = []
+    return p
 }
 
 function walker(oldChild, newChild) {
-    console.log('no handle ', index, oldChild, newChild)
     let currentPatch = {}
     if (!newChild) {
         currentPatch = {
@@ -46,7 +46,6 @@ function walker(oldChild, newChild) {
     }
 
     if (Object.keys(currentPatch).length > 0 && !patchs[index]) {
-        console.log(currentPatch, index)
         patchs[index] = currentPatch 
     }
 }
@@ -65,7 +64,6 @@ function diffAttr(oldNode, newNode) {
             })
         }
     })
-    console.log('attr ', index)
     
     return attr
 }

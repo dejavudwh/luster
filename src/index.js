@@ -46,18 +46,28 @@ class Pape extends Componenet {
 registered(Pape)
 
 class Fuck extends Componenet {
+    constructor(props) {
+        super(props)
+        this.state = {
+            text: false
+        }
+    }
     handleClick() {
-        console.log('click ', this)
+        console.log('click ', this.state)
+        this.setState({
+            text: !this.state.text
+        })
     }
 
     render() {
         return jsx(`
             <div name="st">
                 <span tga="asd">
-                    <span>qqq</span>
-                    <button onClick="{handleClick}">asd</button>
+                    <span>vbvbvb</span>
+                    <button onClick="{handleClick}">${this.state.text}</button>
                 </span>
                 <div>
+                    <button>ds</button>
                 </div>
                 <span>hudawei</span>
             </div>
