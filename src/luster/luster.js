@@ -4,6 +4,7 @@ import createElement from './element'
 import Componenet from './components/component'
 import jsx from '../luster/jsxparser/parse'
 import diff from './domdiif/diff'
+import putPatch from '../luster/domdiif/patch'
 
 let componentUnits = []
 
@@ -30,7 +31,7 @@ function render(element, container) {
     let m = jsx(`
                 <div name="st" data-lusterid="1" test="zxc">
                     <span tga="asd" data-lusterid="1">
-                        zxc
+                        <span>zxc</span>
                         <button data-lusterid="1" onClick="{handleClick}">asd</button>
                     </span>
                     <div class="asd">
@@ -41,6 +42,8 @@ function render(element, container) {
     console.log('patchs ', patchs)
 
     $(container).html(markUp)
+    let dom = document.getElementById('root')
+    putPatch(dom, patchs)
 }
 
 export default Luster

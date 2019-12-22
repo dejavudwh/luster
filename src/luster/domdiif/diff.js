@@ -18,21 +18,33 @@ function walker(oldChild, newChild) {
     let currentPatch = {}
     if (!newChild) {
         console.log('remove -------')
-        currentPatch[REMOVE] = oldChild
+        currentPatch = {
+            type: REMOVE,
+            value: oldChild
+        }
     } else if (isString(oldChild) && isString(newChild)) {
         if (oldChild !== newChild) {
-            currentPatch[TEXT] = newChild
+            currentPatch = {
+                type: TEXT,
+                value: newChild
+            }
         }
     } else if (oldChild.type === newChild.type) {
         let attr = diffAttr(oldChild, newChild)
         if (Object.keys(attr).length > 0) {
             console.log('=== ')
-            currentPatch[ATTR] = attr
+            currentPatch = {
+                type: ATTR,
+                value: attr
+            }
             patchs[index] = currentPatch 
         }
         diffChildrens(oldChild.props.childrens, newChild.props.childrens, index)
     } else {
-        currentPatch[REPLACE] = newChild
+        currentPatch = {
+            type: REPLACE,
+            value: newChild
+        }
     }
 
     if (Object.keys(currentPatch).length > 0 && !patchs[index]) {
