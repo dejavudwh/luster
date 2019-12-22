@@ -11,8 +11,8 @@ class Unit {
 class LusterTextUnit extends Unit {
     getMarkUp(id) {
         this._rootId = id
-        // return `<span data-lusterid="${id}">${this.element}</span>`
-        return `${this.element}`
+        return `<span data-lusterid="${id}">${this.element}</span>`
+        // return `${this.element}`
     }
 }
 

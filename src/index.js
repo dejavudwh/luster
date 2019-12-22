@@ -20,7 +20,6 @@ class Pape extends Componenet {
     }
 
     handleClick() {
-        // console.log('click   ', this.state.text)
         for (let i = 0;i < 10; i++) {
             console.log(i)
             this.setState({
@@ -49,13 +48,18 @@ class Fuck extends Componenet {
     constructor(props) {
         super(props)
         this.state = {
-            text: false
+            text: false,
+            name: 'yim',
+            classname: 'classname',
         }
     }
+
     handleClick() {
         console.log('click ', this.state)
         this.setState({
-            text: !this.state.text
+            text: !this.state.text,
+            name: 'dejavudwh',
+            classname: 'classname2'
         })
     }
 
@@ -67,9 +71,10 @@ class Fuck extends Componenet {
                     <button onClick="{handleClick}">${this.state.text}</button>
                 </span>
                 <div>
-                    <button>ds</button>
+                    <button class="${this.state.classname}">ds</button>
                 </div>
-                <span>hudawei</span>
+                <span>${this.state.name}</span>
+                <Pape></Pape>
             </div>
         `)
     }

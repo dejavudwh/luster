@@ -67,6 +67,7 @@ function str2dom(str) {
 }
 
 function setAttr(dom, attrs) {
+    console.log('set attr ', dom, attrs)
     for (let key in attrs) {
         dom.setAttribute(key, attrs[key])
     }

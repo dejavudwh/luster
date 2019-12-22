@@ -38,6 +38,7 @@ function walker(oldChild, newChild) {
             patchs[index] = currentPatch 
         }
         diffChildrens(oldChild.props.childrens, newChild.props.childrens, index)
+        return
     } else {
         currentPatch = {
             type: REPLACE,
@@ -46,6 +47,7 @@ function walker(oldChild, newChild) {
     }
 
     if (Object.keys(currentPatch).length > 0 && !patchs[index]) {
+        console.log('put ', currentPatch)
         patchs[index] = currentPatch 
     }
 }

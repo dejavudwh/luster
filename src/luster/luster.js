@@ -25,13 +25,13 @@ function render(element, container) {
     if (Luster.renderTimes > 0) {
         let patchs = diff(Luster.virtualDom, jsx(markUp))
         let dom = document.getElementById('root')
+        console.log('patch', patchs)
         putPatch(dom.firstChild, patchs)
     } else {
         $(container).html(markUp)
     }
 
     Luster.virtualDom = jsx(markUp)
-    console.log(Luster.virtualDom)
 
     // debug
     // let m = jsx(`
