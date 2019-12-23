@@ -54,6 +54,10 @@ class Fuck extends Componenet {
         }
     }
 
+    handleClick2() {
+        console.log('click 2222 ', this.state)
+    }
+
     handleClick() {
         console.log('click ', this.state)
         this.setState({

@@ -7,6 +7,7 @@ import diff from './domdiif/diff'
 import putPatch from '../luster/domdiif/patch'
 
 let componentUnits = []
+let eventDom = []
 
 let Luster = {
     render,
@@ -16,6 +17,7 @@ let Luster = {
     componentUnits,
     renderTimes: 0,
     virtualDom: {},
+    eventDom,
 }
 
 function render(element, container) {
@@ -34,21 +36,23 @@ function render(element, container) {
     Luster.virtualDom = jsx(markUp)
 
     // debug
-    // let m = jsx(`
-    //             <div name="st" data-lusterid="1" test="zxc">
-    //                 <span tga="asd" data-lusterid="1">
-    //                     <button data-lusterid="1" onClick="{handleClick}"><span>vbsfsgdf</span></button>
-    //                 </span>
-    //                 <div class="asd">
-    //                     <button>zxc</button>
-    //                 </div>
-    //                 <span>nv</span>
-    //             </div>
-    //         `)
+    let m = jsx(`
+                <div name="st">
+                    <span tga="asd">
+                        <span>vbvbvb</span>
+                        <button onClick="{handleClick2}"><span>button</span></button>
+                    </span>
+                    <div>
+                        <button class="cccccc"><sapn>ds</sapn></button>
+                    </div>
+                    <span><span>tttttttt</span></span>
+                    <Pape></Pape>
+                </div>
+            `)
 
-    // let patchs = diff(Luster.virtualDom, m)
-    // let dom = document.getElementById('root')
-    // putPatch(dom.firstChild, patchs)
+    let patchs = diff(Luster.virtualDom, m)
+    let dom = document.getElementById('root')
+    putPatch(dom.firstChild, patchs)
 }
 
 export default Luster

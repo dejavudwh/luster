@@ -33,7 +33,11 @@ class LusterNativeUnit extends Unit {
                 let val = props[key].slice(1, props[key].length - 1)
                 let obj = comps[comps.length - 1]
                 let element = obj[Object.keys(obj)[0]]
-                $(document).on(eventType, `[data-lusterid="${id}"]`, () => { element[val]() })
+                $(`[data-lusterid="${id}"`).bind(eventType, () => { element[val]() })
+                Luster.eventDom.push({
+                    element: `[data-lusterid="${id}"]`,
+                    component: element
+                })
             } else if (key === 'childrens') {
                 contentStr = props[key].map((child, idx) => {
                     if (lusterComponent.hasOwnProperty(child.type)) {

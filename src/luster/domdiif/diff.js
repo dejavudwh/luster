@@ -47,7 +47,7 @@ function walker(oldChild, newChild) {
     }
 
     if (Object.keys(currentPatch).length > 0 && !patchs[index]) {
-        console.log('put ', currentPatch)
+        // console.log('put ', currentPatch)
         patchs[index] = currentPatch 
     }
 }

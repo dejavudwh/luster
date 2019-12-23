@@ -1,3 +1,6 @@
+import Luster from '../luster'
+import $ from 'jquery'
+
 let index = 0
 function putPatch(dom, patchs) {
     walker(dom, patchs)
@@ -68,8 +71,35 @@ function str2dom(str) {
 
 function setAttr(dom, attrs) {
     console.log('set attr ', dom, attrs)
+    let event = {}
     for (let key in attrs) {
-        dom.setAttribute(key, attrs[key])
+        if (/on[A-Z]/.test(key)) {
+            event = {
+                key: key.slice(2).toLocaleLowerCase(),
+                val: attrs[key].slice(1, attrs[key].length - 1),
+            }
+        } else {
+            dom.setAttribute(key, attrs[key])
+        }
+    }
+
+    // $(`[data-lusterid="0.0.1"]`).unbind()
+    let id = dom.getAttribute('data-lusterid')
+    let element = `[data-lusterid="${id}"]`
+    if (Object.keys(event).length > 0) {
+        let oe = Luster.eventDom
+        let component
+        let func
+        for (let i = 0; i < oe.length; i++) {
+            console.log('=== oe ', oe[i], id)
+            if (oe[i].element === element) {
+                component = oe[i].component
+                func = oe[i].func
+            }
+        }
+
+        console.log('===== event pa ', $(element), element)
+        $(element).bind(event.key, () => { component[event.val]() })
     }
 }
 
