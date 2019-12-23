@@ -94,7 +94,9 @@ function setAttr(dom, attrs) {
             if (oe[i].element === element) {
                 component = oe[i].component
                 oe[i].eventType = event.key
-                oe[i].func = () => { component[event.val]() }
+                oe[i].func = () => { 
+                    component[event.val]() 
+                }
             }
         }
         console.log('===== event pa ', $(element), element)

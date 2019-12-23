@@ -80,6 +80,7 @@ class Fuck extends Componenet {
                     <button class="${this.state.classname}">ds</button>
                 </div>
                 <span>${this.state.name}</span>
+                <button onClick="{handleClick}">bbbbb</button>
                 <Pape></Pape>
             </div>
         `)
@@ -88,20 +89,15 @@ class Fuck extends Componenet {
 
 registered(Fuck)
 
-// const element = Luster.createElement(Fuck, {name: 'luster', onClick: function(){ alert('1') }}, 
-//                                     'hello luster', 
-//                                     Luster.createElement('button', {}, '123'))                                 
+class App extends Componenet {
+    render() {
+        return jsx(`
+            <Router>
+                <Route path='/home' component="{Fuck}"></Route>
+            </Router>
+        `)
+    }
+}
 
-// const element = Luster.createElement(jsx.type, jsx.props)
-
-// log(element)
-
-// const el = `
-//             <div name="aaa">
-//                 <span tga="bbb">
-//                     <button onClick="${function asd(){console.log('asd')}}">ccc</button>
-//                 </span>
-//             </div>
-// `
 
 Luster.render(Fuck, document.getElementById('root'))
