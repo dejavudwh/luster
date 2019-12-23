@@ -25,6 +25,7 @@ function render(element, container) {
     let markUp = unitInstance.getMarkUp(Luster.nextRootIndex)
 
     if (Luster.renderTimes > 0) {
+        console.log('mark u ', markUp)
         let patchs = diff(Luster.virtualDom, jsx(markUp))
         let dom = document.getElementById('root')
         console.log('patch', patchs)
@@ -35,24 +36,30 @@ function render(element, container) {
 
     Luster.virtualDom = jsx(markUp)
 
-    // debug
-    let m = jsx(`
-                <div name="st">
-                    <span tga="asd">
-                        <span>vbvbvb</span>
-                        <button onClick="{handleClick2}"><span>button</span></button>
-                    </span>
-                    <div>
-                        <button class="cccccc"><sapn>ds</sapn></button>
-                    </div>
-                    <span><span>tttttttt</span></span>
-                    <Pape></Pape>
-                </div>
-            `)
+    for (let i = 0; i < Luster.eventDom.length; i++) {
+        let event = Luster.eventDom[i]
+        $(event.element).bind(event.eventType, event.func)
+        console.log(' ing event ', event)
+    }
 
-    let patchs = diff(Luster.virtualDom, m)
-    let dom = document.getElementById('root')
-    putPatch(dom.firstChild, patchs)
+    // debug
+    // let m = jsx(`
+    //             <div name="st">
+    //                 <span tga="asd">
+    //                     <span>vbvbvb</span>
+    //                     <button onClick="{handleClick2}"><span>button</span></button>
+    //                 </span>
+    //                 <div>
+    //                     <button class="cccccc"><sapn>ds</sapn></button>
+    //                 </div>
+    //                 <span><span>tttttttt</span></span>
+    //                 <Pape></Pape>
+    //             </div>
+    //         `)
+
+    // let patchs = diff(Luster.virtualDom, m)
+    // let dom = document.getElementById('root')
+    // putPatch(dom.firstChild, patchs)
 }
 
 export default Luster

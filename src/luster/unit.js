@@ -25,18 +25,24 @@ class LusterNativeUnit extends Unit {
         let contentStr = ''
         let comps = Luster.componentUnits
         for (let key in props) {
-              if (/on[A-Z]/.test(key)) {
+            if (/on[A-Z]/.test(key)) {
                 if (Luster.renderTimes !== 0) {
+                    // 给打补丁的时候用
+                    tagStart += `${key}="${props[key]}"`
                     break
                 }
                 let eventType = key.slice(2).toLocaleLowerCase()
                 let val = props[key].slice(1, props[key].length - 1)
                 let obj = comps[comps.length - 1]
                 let element = obj[Object.keys(obj)[0]]
-                $(`[data-lusterid="${id}"`).bind(eventType, () => { element[val]() })
+                // console.log('on click ', tagStart, `[data-lusterid="${id}"]`, element[val])
+                // $(`[data-lusterid="${id}"]`).bind(eventType, () => { element[val]() })
+                // $(document).on(eventType, `[data-lusterid="${id}"]`, () => { element[val]() })
                 Luster.eventDom.push({
+                    eventType: eventType,
                     element: `[data-lusterid="${id}"]`,
-                    component: element
+                    component: element,
+                    func: () => { element[val]() }
                 })
             } else if (key === 'childrens') {
                 contentStr = props[key].map((child, idx) => {

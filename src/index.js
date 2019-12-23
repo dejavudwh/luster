@@ -51,6 +51,7 @@ class Fuck extends Componenet {
             text: false,
             name: 'yim',
             classname: 'classname',
+            handle: 'handleClick',
         }
     }
 
@@ -63,7 +64,8 @@ class Fuck extends Componenet {
         this.setState({
             text: !this.state.text,
             name: 'dejavudwh',
-            classname: 'classname2'
+            classname: 'classname2',
+            handle: 'handleClick2',
         })
     }
 
@@ -72,7 +74,7 @@ class Fuck extends Componenet {
             <div name="st">
                 <span tga="asd">
                     <span>vbvbvb</span>
-                    <button onClick="{handleClick}">${this.state.text}</button>
+                    <button onClick="{${this.state.handle}}">${this.state.text}</button>
                 </span>
                 <div>
                     <button class="${this.state.classname}">ds</button>

@@ -83,23 +83,23 @@ function setAttr(dom, attrs) {
         }
     }
 
-    // $(`[data-lusterid="0.0.1"]`).unbind()
-    let id = dom.getAttribute('data-lusterid')
-    let element = `[data-lusterid="${id}"]`
     if (Object.keys(event).length > 0) {
+        let id = dom.getAttribute('data-lusterid')
+        let element = `[data-lusterid="${id}"]`
         let oe = Luster.eventDom
         let component
-        let func
+        $(element).unbind()
         for (let i = 0; i < oe.length; i++) {
             console.log('=== oe ', oe[i], id)
             if (oe[i].element === element) {
                 component = oe[i].component
-                func = oe[i].func
+                oe[i].eventType = event.key
+                oe[i].func = () => { component[event.val]() }
             }
         }
-
         console.log('===== event pa ', $(element), element)
-        $(element).bind(event.key, () => { component[event.val]() })
+        // $(element).bind(event.key, () => { component[event.val]() })
+        // $(document).on(event.key, element, () => { component[event.val]() })
     }
 }
 
