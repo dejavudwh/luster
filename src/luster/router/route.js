@@ -9,14 +9,13 @@ class Route extends Component {
         console.log('route ', this.props)
         let c = this.props.props
         let path = c['path']
-        if (window.location.pathname.includes(path)) {
+        if (window.location.pathname === path) {
             let cn = c['component']
             let name = cn.slice(1, cn.length - 1)
             let component
             if (lusterComponent.hasOwnProperty(name)) {
                 component = lusterComponent[name]
             }
-            // console.log('render route ', name, component)
             
             let unitInstance = createLusterUnit(component)
             let markUp = unitInstance.getMarkUp(Luster.nextRootIndex)

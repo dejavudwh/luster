@@ -23,7 +23,7 @@ class LusterNativeUnit extends Unit {
         let {type, props} = this.element
         if (type === 'Router') {
             return new Router(this.element).render()
-        } else if (type === 'Routec') {
+        } else if (type === 'Route') {
             return new Route(this.element).render()
         }
         let tagStart = `<${type} data-lusterid="${id}" `
@@ -41,7 +41,6 @@ class LusterNativeUnit extends Unit {
                 let val = props[key].slice(1, props[key].length - 1)
                 let obj = comps[comps.length - 1]
                 let element = obj[Object.keys(obj)[1]]
-                console.log('is nof func ', comps)
                 Luster.eventDom.push({
                     eventType: eventType,
                     element: `[data-lusterid="${id}"]`,

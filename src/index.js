@@ -74,6 +74,7 @@ class Fuck extends Componenet {
                 <span tga="asd">
                     <span>vbvbvb</span>
                     <button onClick="{${this.state.handle}}">${this.state.text}</button>
+                    <Route path="/home/zzcc" component="{Pape}"></Route>
                 </span>
                 <div>
                     <button class="${this.state.classname}">ds</button>
@@ -81,7 +82,7 @@ class Fuck extends Componenet {
                 <span>${this.state.name}</span>
                 <button onClick="{handleClick}">bbbbb</button>
                 <Pape></Pape>
-                <Routec path="/home/self" component="{Pape}"></Routec>
+                <Route path="/home/self" component="{Pape}"></Route>
             </div>
         `)
     }
@@ -93,11 +94,8 @@ class App extends Componenet {
     render() {
         return jsx(`
             <Router>
-                <Route path='/home' component="{Fuck}">
-                    <Route path='/home/self' component="{Pape}"></Route>
-                </Route>
+                <Route path='/home' component="{Fuck}"></Route>
                 <Route path='/pape' component="{Pape}"></Route>
-                <Route path='/b' component="{Fuck}"></Route>
             </Router>
         `)
     }
