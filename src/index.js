@@ -35,8 +35,7 @@ class Pape extends Componenet {
                      zxc
                     <button onClick="{handleClick}">${this.state.text}</button>
                 </span>
-                <div id="asd">
-                </div>
+                <div id="asd"></div>
             </div>
         `)
     }
@@ -82,6 +81,7 @@ class Fuck extends Componenet {
                 <span>${this.state.name}</span>
                 <button onClick="{handleClick}">bbbbb</button>
                 <Pape></Pape>
+                <Routec path="/home/self" component="{Pape}"></Routec>
             </div>
         `)
     }
@@ -93,7 +93,9 @@ class App extends Componenet {
     render() {
         return jsx(`
             <Router>
-                <Route path='/home' component="{Fuck}"></Route>
+                <Route path='/home' component="{Fuck}">
+                    <Route path='/home/self' component="{Pape}"></Route>
+                </Route>
                 <Route path='/pape' component="{Pape}"></Route>
                 <Route path='/b' component="{Fuck}"></Route>
             </Router>

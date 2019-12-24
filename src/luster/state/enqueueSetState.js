@@ -46,10 +46,13 @@ function flushRender() {
     }
 
     let obj = Luster.componentUnits[0]
-    let app = obj[Object.keys(obj)[0]]
+    let app = obj[Object.keys(obj)[1]]
     Luster.nextRootIndex = 0
     Luster.renderTimes++
+    Luster.flushing = true
+    console.log('set sta ', app)
     Luster.render(app.render(), document.getElementById('root'))
+    Luster.flushing = false
 }
 
 export default enqueueSetState

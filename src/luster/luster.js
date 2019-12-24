@@ -17,6 +17,7 @@ let Luster = {
     componentUnits,
     renderTimes: 0,
     virtualDom: {},
+    flushing: false,
     eventDom,
 }
 
@@ -38,6 +39,7 @@ function render(element, container) {
     for (let i = 0; i < Luster.eventDom.length; i++) {
         let event = Luster.eventDom[i]
         // 暂时先这样处理吧
+        console.log('bind ', event)
         $(event.element).unbind()
         $(event.element).bind(event.eventType, event.func)
         // console.log(' ing event ', event)

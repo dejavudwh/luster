@@ -1,6 +1,7 @@
 import { lusterComponent } from './components/LusterRegister'
 import Luster from './luster'
 import Router from './router/router'
+import Route from './router/route'
 
 class Unit {
     constructor(element) {
@@ -22,6 +23,8 @@ class LusterNativeUnit extends Unit {
         let {type, props} = this.element
         if (type === 'Router') {
             return new Router(this.element).render()
+        } else if (type === 'Routec') {
+            return new Route(this.element).render()
         }
         let tagStart = `<${type} data-lusterid="${id}" `
         let tagEnd = `</${type}>`
@@ -37,7 +40,8 @@ class LusterNativeUnit extends Unit {
                 let eventType = key.slice(2).toLocaleLowerCase()
                 let val = props[key].slice(1, props[key].length - 1)
                 let obj = comps[comps.length - 1]
-                let element = obj[Object.keys(obj)[0]]
+                let element = obj[Object.keys(obj)[1]]
+                console.log('is nof func ', comps)
                 Luster.eventDom.push({
                     eventType: eventType,
                     element: `[data-lusterid="${id}"]`,
@@ -68,15 +72,28 @@ class LusterCompositUnit extends Unit {
         let component
         let constructor = this.element.prototype.constructor
         let name = constructor.name
-        let idx = existComponent(comps, name)
-        if (idx !== -1) {
+        // let idx = existComponent(comps, name)
+        // if (idx !== -1) {
+        //     component = comps[idx][name]
+        // } else {
+        //     component = new this.element()
+        //     comps.push({
+        //         [name]: component,
+        //     })
+        // }
+        if (Luster.flushing) {
+            let idx = existComponent(comps, name, id)
+            console.log('dd ', name, id)
             component = comps[idx][name]
         } else {
             component = new this.element()
             comps.push({
-                [name]: component
+                id: id,
+                [name]: component,
             })
+            console.log('push ', component)
         }
+        console.log('...', comps)
         component.componentWillCount && component.componentWillCount()
         let renderInstance = component.render()
         let compositInstance = createLusterUnit(renderInstance)
@@ -84,9 +101,10 @@ class LusterCompositUnit extends Unit {
     }
 }
 
-function existComponent(components, name) {
+function existComponent(components, name, id) {
     for (let i in components) {
-        if (components[i].hasOwnProperty(name)) {
+        let c = components[i]
+        if (c.hasOwnProperty(name) && c.id === id) {
             return i
         }
     }
