@@ -54,7 +54,8 @@ class LusterNativeUnit extends Unit {
                         child = lusterComponent[child.type]
                     }
                     let unitInstance = createLusterUnit(child)
-                    return unitInstance.getMarkUp(`${id}.${idx}`)
+                    Luster.nextRootIndex = `${id}.${idx}`
+                    return unitInstance.getMarkUp(Luster.nextRootIndex)
                 }).join('')
             } else {
                 tagStart += `${key}="${props[key]}"`

@@ -93,6 +93,7 @@ function setAttr(dom, attrs) {
             // console.log('=== oe ', oe[i], id)
             if (oe[i].element === element) {
                 component = oe[i].component
+                console.log('patch === ', oe, component, event.val)
                 oe[i].eventType = event.key
                 oe[i].func = () => { 
                     component[event.val]() 
