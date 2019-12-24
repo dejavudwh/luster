@@ -94,12 +94,12 @@ class App extends Componenet {
         return jsx(`
             <Router>
                 <Route path='/home' component="{Fuck}"></Route>
-                <Route path='/home' component="{Fuck}"></Route>
-                <Route path='/home' component="{Fuck}"></Route>
+                <Route path='/pape' component="{Pape}"></Route>
+                <Route path='/b' component="{Fuck}"></Route>
             </Router>
         `)
     }
 }
 
 
-Luster.render(Fuck, document.getElementById('root'))
+Luster.render(App, document.getElementById('root'))
