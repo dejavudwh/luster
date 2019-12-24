@@ -70,7 +70,7 @@ function str2dom(str) {
 }
 
 function setAttr(dom, attrs) {
-    console.log('set attr ', dom, attrs)
+    // console.log('set attr ', dom, attrs)
     let event = {}
     for (let key in attrs) {
         if (/on[A-Z]/.test(key)) {
@@ -90,7 +90,7 @@ function setAttr(dom, attrs) {
         let component
         $(element).unbind()
         for (let i = 0; i < oe.length; i++) {
-            console.log('=== oe ', oe[i], id)
+            // console.log('=== oe ', oe[i], id)
             if (oe[i].element === element) {
                 component = oe[i].component
                 oe[i].eventType = event.key
@@ -99,9 +99,7 @@ function setAttr(dom, attrs) {
                 }
             }
         }
-        console.log('===== event pa ', $(element), element)
-        // $(element).bind(event.key, () => { component[event.val]() })
-        // $(document).on(event.key, element, () => { component[event.val]() })
+        
     }
 }
 

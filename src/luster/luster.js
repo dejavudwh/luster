@@ -25,10 +25,9 @@ function render(element, container) {
     let markUp = unitInstance.getMarkUp(Luster.nextRootIndex)
 
     if (Luster.renderTimes > 0) {
-        console.log('mark u ', markUp)
         let patchs = diff(Luster.virtualDom, jsx(markUp))
         let dom = document.getElementById('root')
-        console.log('patch', patchs)
+        // console.log('patch', patchs)
         putPatch(dom.firstChild, patchs)
     } else {
         $(container).html(markUp)
@@ -38,8 +37,10 @@ function render(element, container) {
 
     for (let i = 0; i < Luster.eventDom.length; i++) {
         let event = Luster.eventDom[i]
+        // 暂时先这样处理吧
+        $(event.element).unbind()
         $(event.element).bind(event.eventType, event.func)
-        console.log(' ing event ', event)
+        // console.log(' ing event ', event)
     }
 
     // debug

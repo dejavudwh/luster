@@ -94,6 +94,8 @@ class App extends Componenet {
         return jsx(`
             <Router>
                 <Route path='/home' component="{Fuck}"></Route>
+                <Route path='/home' component="{Fuck}"></Route>
+                <Route path='/home' component="{Fuck}"></Route>
             </Router>
         `)
     }
