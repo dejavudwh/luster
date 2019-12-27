@@ -3,8 +3,8 @@ import $ from 'jquery'
 
 let index = 0
 function putPatch(dom, patchs) {
-    walker(dom, patchs)
     index = 0
+    walker(dom, patchs)
 }
 
 function walker(dom, patchs) {
@@ -90,7 +90,6 @@ function setAttr(dom, attrs) {
         let component
         $(element).unbind()
         for (let i = 0; i < oe.length; i++) {
-            // console.log('=== oe ', oe[i], id)
             if (oe[i].element === element) {
                 component = oe[i].component
                 console.log('patch === ', oe, component, event.val)

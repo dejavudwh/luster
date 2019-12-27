@@ -7,26 +7,22 @@ const REMOVE = 'REMOVE'
 const ATTR = 'ATTR'
 
 function diff(oldTree, newTree) {
+    clearPatchs()
     walker(oldTree, newTree)
-    index = 0
-    let p = patchs
-    patchs = []
-    return p
+    return patchs
 }
 
 function walker(oldChild, newChild) {
     let currentPatch = {}
+    let type = ''
+    let value = {}
     if (!newChild) {
-        currentPatch = {
-            type: REMOVE,
-            value: oldChild
-        }
+        type = REMOVE
+        value = oldChild
     } else if (isString(oldChild) && isString(newChild)) {
         if (oldChild !== newChild) {
-            currentPatch = {
-                type: TEXT,
-                value: newChild
-            }
+            type = TEXT
+            value = newChild
         }
     } else if (oldChild.type === newChild.type) {
         let attr = diffAttr(oldChild, newChild)
@@ -40,14 +36,16 @@ function walker(oldChild, newChild) {
         diffChildrens(oldChild.props.childrens, newChild.props.childrens, index)
         return
     } else {
-        currentPatch = {
-            type: REPLACE,
-            value: newChild
-        }
+        type = REPLACE
+        value = newChild
+    }
+
+    currentPatch = {
+        type,
+        value,
     }
 
     if (Object.keys(currentPatch).length > 0 && !patchs[index]) {
-        // console.log('put ', currentPatch)
         patchs[index] = currentPatch 
     }
 }
@@ -79,6 +77,11 @@ function diffChildrens(oldChildrens, newChildrens) {
 
 function isString(node) {
     return Object.prototype.toString.call(node) === '[object String]'
+}
+
+function clearPatchs() {
+    patchs = []
+    index = 0
 }
 
 export default diff

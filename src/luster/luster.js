@@ -28,22 +28,13 @@ function render(element, container) {
     if (Luster.renderTimes > 0) {
         let patchs = diff(Luster.virtualDom, jsx(markUp))
         let dom = document.getElementById('root')
-        // console.log('patch', patchs)
         putPatch(dom.firstChild, patchs)
     } else {
         $(container).html(markUp)
     }
 
-    Luster.virtualDom = jsx(markUp)
-
-    for (let i = 0; i < Luster.eventDom.length; i++) {
-        let event = Luster.eventDom[i]
-        // 暂时先这样处理吧
-        console.log('bind ', event)
-        $(event.element).unbind()
-        $(event.element).bind(event.eventType, event.func)
-        // console.log(' ing event ', event)
-    }
+    addListener()
+    Luster.virtualDom = jsx(markUp) 
 
     // debug
     // let m = jsx(`
@@ -63,6 +54,15 @@ function render(element, container) {
     // let patchs = diff(Luster.virtualDom, m)
     // let dom = document.getElementById('root')
     // putPatch(dom.firstChild, patchs)
+}
+
+function addListener() {
+    for (let i = 0; i < Luster.eventDom.length; i++) {
+        let event = Luster.eventDom[i]
+        // 暂时先这样处理吧
+        $(event.element).unbind()
+        $(event.element).bind(event.eventType, event.func)
+    }
 }
 
 export default Luster

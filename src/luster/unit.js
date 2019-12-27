@@ -18,15 +18,8 @@ class LusterTextUnit extends Unit {
 }
 
 class LusterNativeUnit extends Unit {
-    getMarkUp(id) {
-        this._rootId = id
-        let {type, props} = this.element
-        if (type === 'Router') {
-            return new Router(this.element).render()
-        } else if (type === 'Route') {
-            return new Route(this.element).render()
-        }
-        let tagStart = `<${type} data-lusterid="${id}" `
+    handleGeneral(type, props) {
+        let tagStart = `<${type} data-lusterid="${this._rootId}" `
         let tagEnd = `</${type}>`
         let contentStr = ''
         let comps = Luster.componentUnits
@@ -43,7 +36,7 @@ class LusterNativeUnit extends Unit {
                 let element = obj[Object.keys(obj)[1]]
                 Luster.eventDom.push({
                     eventType: eventType,
-                    element: `[data-lusterid="${id}"]`,
+                    element: `[data-lusterid="${this._rootId}"]`,
                     component: element,
                     func: () => { element[val]() }
                 })
@@ -53,7 +46,7 @@ class LusterNativeUnit extends Unit {
                         child = lusterComponent[child.type]
                     }
                     let unitInstance = createLusterUnit(child)
-                    Luster.nextRootIndex = `${id}.${idx}`
+                    Luster.nextRootIndex = `${this._rootId}.${idx}`
                     return unitInstance.getMarkUp(Luster.nextRootIndex)
                 }).join('')
             } else {
@@ -63,27 +56,48 @@ class LusterNativeUnit extends Unit {
 
         return tagStart + '>' + contentStr + tagEnd
     }
+    
+    handleRouter() {
+        return new Router(this.element).render()
+    }
+
+    handlerRoute() {
+        return new Route(this.element).render()
+    }
+
+    getMarkUp(id) {
+        this._rootId = id
+        let {type, props} = this.element
+        if (type === 'Router') {
+            return this.handleRouter()
+        } else if (type === 'Route') {
+            return this.handlerRoute()
+        } else {
+            return this.handleGeneral(type, props)
+        }
+    }
 }
 
 class LusterCompositUnit extends Unit {
+    getComponent(components, name, id) {
+        for (let i in components) {
+            let c = components[i]
+            if (c.hasOwnProperty(name) && c.id === id) {
+                return i
+            }
+        }
+    
+        return -1
+    }
+
     getMarkUp(id) {
         this._rootId = id
         let comps = Luster.componentUnits
         let component
         let constructor = this.element.prototype.constructor
         let name = constructor.name
-        // let idx = existComponent(comps, name)
-        // if (idx !== -1) {
-        //     component = comps[idx][name]
-        // } else {
-        //     component = new this.element()
-        //     comps.push({
-        //         [name]: component,
-        //     })
-        // }
         if (Luster.flushing) {
-            let idx = existComponent(comps, name, id)
-            console.log('dd ', name, id)
+            let idx = this.getComponent(comps, name, id)
             component = comps[idx][name]
         } else {
             component = new this.element()
@@ -91,25 +105,12 @@ class LusterCompositUnit extends Unit {
                 id: id,
                 [name]: component,
             })
-            console.log('push ', component)
         }
-        console.log('...', comps)
         component.componentWillCount && component.componentWillCount()
         let renderInstance = component.render()
         let compositInstance = createLusterUnit(renderInstance)
         return compositInstance.getMarkUp(id)
     }
-}
-
-function existComponent(components, name, id) {
-    for (let i in components) {
-        let c = components[i]
-        if (c.hasOwnProperty(name) && c.id === id) {
-            return i
-        }
-    }
-
-    return -1
 }
 
 function createLusterUnit(element) {
